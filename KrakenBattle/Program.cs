@@ -37,7 +37,7 @@ namespace KrakenBattle
                     }
 
                     Console.WriteLine();
-                    Console.WriteLine($"{pirate} slashes the {monsterName} tentacles for {boatAxeTotal} damage. The {monsterName} has {monsterHP} HP left.");
+                    Console.WriteLine($"{pirate} slashes the {monsterName} for {boatAxeTotal} damage. The {monsterName} has {monsterHP} HP left.");
 
                     if (monsterHP == 0)
                     {
@@ -76,7 +76,7 @@ namespace KrakenBattle
         }
         static void Main(string[] args)
         {
-            var characterNames = new List<string> { "Gregory", "Foul Fritjof", "Rozanna", "Sinclair", };
+            var characterNames = new List<string> { "David", "Foul Fritjof", "Rozanna", "Sinclair", };
             Console.WriteLine($"Swashbuckling pirates {String.Join(", ", characterNames)} stand upon the deck.");
 
             int skeletonHP = DiceRoll(2, 8, 6);
