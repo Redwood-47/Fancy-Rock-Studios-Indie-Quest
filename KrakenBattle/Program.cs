@@ -90,6 +90,7 @@ namespace KrakenBattle
            
             if (characterNames.Count > 0)
             {
+                Console.ForegroundColor=ConsoleColor.White;
                 Console.WriteLine($"After defending their ship from three vicious attackers, the pirates {String.Join(", ", characterNames)} sail away to plunder another day.");
             }
         }
