@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flowchart RPG - Algorithm Design", "Flowchart RPG - Algorithm Design.csproj", "{D790069F-E941-4A76-8979-2BDAA3BADFE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D790069F-E941-4A76-8979-2BDAA3BADFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D790069F-E941-4A76-8979-2BDAA3BADFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D790069F-E941-4A76-8979-2BDAA3BADFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D790069F-E941-4A76-8979-2BDAA3BADFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF304DAE-3DFB-4C06-BC7A-EC56C68B186E}
+	EndGlobalSection
+EndGlobal
