@@ -58,7 +58,7 @@ namespace Arrays_Mission_3
                 int width = 50;
                 int height = 20;
                 bool[,] roads = new bool[width, height];
-                int intersectionsAmount = random.Next(1, 7);
+                int intersectionsAmount = random.Next(7, 15);
                 for (int i = 0; i < intersectionsAmount; i++)
                 {
                     GenerateIntersection(roads, random.Next(width), random.Next(height));
