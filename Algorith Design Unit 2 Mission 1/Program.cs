@@ -16,13 +16,23 @@ namespace Algorith_Design_Unit_2_Mission_1
                 items[j] = temp;
             }
         }
+
+        static int Factorial(int n)
+        {
+            if (n == 0)
+                return 1;
+            else
+            {
+                int factorialTotal = n * Factorial (n-1);
+                return factorialTotal;
+            }
+        }
     
         static void Main(string[] args)
         {
             var participantList = new List<string> { "Patrik", "Anton", "Matej", "Bozo", "Tintin" };
             Console.WriteLine($"Learning office homies: {String.Join(", ",participantList)}");
             Console.WriteLine("Swapping desks...");
-            
             while (true)
             {
 
@@ -37,7 +47,15 @@ namespace Algorith_Design_Unit_2_Mission_1
                     break;
                 }
             }
+
             Console.WriteLine($"Shuffled learning office homies: {String.Join(", ",participantList)}");
+
+            for (int i = 0; i < 21; i++)
+            {
+                Console.WriteLine($"{i}! = {Factorial(i)}"); 
+            }
+            
+
         }
     }
 }
