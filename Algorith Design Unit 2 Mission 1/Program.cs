@@ -17,13 +17,15 @@ namespace Algorith_Design_Unit_2_Mission_1
             }
         }
 
-        static int Factorial(int n)
+        static double Factorial(int n)
         {
             if (n == 0)
+            {
                 return 1;
+            }
             else
             {
-                int factorialTotal = n * Factorial (n-1);
+                double factorialTotal = n * Factorial(n-1);
                 return factorialTotal;
             }
         }
@@ -50,7 +52,7 @@ namespace Algorith_Design_Unit_2_Mission_1
 
             Console.WriteLine($"Shuffled learning office homies: {String.Join(", ",participantList)}");
 
-            for (int i = 0; i < 21; i++)
+            for (int i = 0; i < 53; i++)
             {
                 Console.WriteLine($"{i}! = {Factorial(i)}"); 
             }
