@@ -137,8 +137,7 @@ namespace Algorith_Design_Unit_3
 
             //Calculate Title
             string title = "Sinclair's Despair";
-            int spacings = width - title.Length;
-            int spacing = spacings / 2;
+            int spacing = (width - title.Length) / 2;
             int titleStart = spacing;
 
             //Prepare River
