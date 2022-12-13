@@ -24,35 +24,23 @@ namespace Switches_Mission_2
                     switch (equationStrings[1])
                     {
                         case "*":
-                            sumOfPrice = x * y;
-                            break;
-
-                        case "+":
-                            sumOfPrice = x + y;
-                            break;
-
-                        case "/":
-                            sumOfPrice = x / y;
-                            break;
-
-                        case "-":
-                            sumOfPrice = x - y;
-                            break;
-
-                        case "plus":
-                            sumOfPrice = x + y;
-                            break;
-
-                        case "minus":
-                            sumOfPrice = x - y;
-                            break;
-
                         case "times":
                             sumOfPrice = x * y;
                             break;
 
+                        case "+":
+                        case "plus":
+                            sumOfPrice = x + y;
+                            break;
+
+                        case "/":
                         case "divided":
                             sumOfPrice = x / y;
+                            break;
+
+                        case "-":
+                        case "minus":
+                            sumOfPrice = x - y;
                             break;
                     }
                 }
