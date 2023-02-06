@@ -18,6 +18,13 @@ namespace Monster_Manual_Unit_1
         Other = 10
     }
 
+    public enum WeightCategory
+    {
+        Light,
+        Medium,
+        Heavy
+    }
+
     public class MonsterType
     {
         public string name;
@@ -26,23 +33,57 @@ namespace Monster_Manual_Unit_1
         public int hitPointsDefault;
         public string hitPointsRoll;
         public int armorClass;
-        public ArmorTypeID armorType;
+        public ArmorTypeID armorTypeID;
         public string speed;
         public string challengeRating;
         public string xp;
     }
 
+    public class ArmorType
+    {
+        public string DisplayName;
+        public WeightCategory Category;
+        public int Weight;
+    }
+
     internal class Program
     {
+        static SortedList<string, MonsterType> monsters = new SortedList<string, MonsterType>();
+        static Dictionary<ArmorTypeID, ArmorType> armorTypes = new Dictionary<ArmorTypeID, ArmorType>();
+
+        static void Display(MonsterType monsterType)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Name: {monsterType.name}");
+            Console.WriteLine($"Description: {monsterType.description}");
+            Console.WriteLine($"Alignment: {monsterType.alignment}");
+            Console.WriteLine($"Hit Points Roll: {monsterType.hitPointsRoll}");
+            Console.WriteLine($"Armor Class: {monsterType.armorClass}");
+            if (armorTypes.ContainsKey(monsterType.armorTypeID))
+            {
+                ArmorType currentArmor = armorTypes[monsterType.armorTypeID];
+                Console.WriteLine($"Armor Type: {currentArmor.DisplayName}");
+                Console.WriteLine($"Armor Category: {currentArmor.Category}");
+                Console.WriteLine($"Armor Weight: {currentArmor.Weight} lbs.");
+            }
+            else
+            {
+                Console.WriteLine($"Armor Type: {monsterType.armorTypeID}");
+            }
+            Console.WriteLine();
+        }
+
         static void Main(string[] args)
         {
             string[] manualLines = File.ReadAllLines("Descriptions/MonsterManual.txt");
             string[] armorLines = File.ReadAllLines("Descriptions/ArmorTypes.txt");
-            var monsters = new SortedList<string, MonsterType>();
+
 
             List<MonsterType> monsterTypeResults = new List<MonsterType>();
+            List<ArmorType> armorTypeResults = new List<ArmorType>();
 
             MonsterType currentMonster = null;
+            ArmorType currentArmor = null;
 
             for (int i = 0; i < manualLines.Length; i++)
             {
@@ -71,7 +112,6 @@ namespace Monster_Manual_Unit_1
                     string[] splitArmor = armorLineData.Split(' ');
 
                     currentMonster.armorClass = int.Parse(splitArmor[0]);
-                    //Enum.Parse<ArmorTypeID>(splitArmor[1]); Save for later(?)
 
                     int openParenthesisIndex = armorLineData.IndexOf("(");
                     int closedParenthesisIndex = armorLineData.IndexOf(")");
@@ -82,46 +122,57 @@ namespace Monster_Manual_Unit_1
 
                         if (armorTypeText.Contains("Natural"))
                         {
-                            currentMonster.armorType = ArmorTypeID.Natural;
-                        }
-                        else if (armorTypeText.Contains("Leather"))
-                        {
-                            currentMonster.armorType = ArmorTypeID.Leather;
+                            currentMonster.armorTypeID = ArmorTypeID.Natural;
                         }
                         else if (armorTypeText.Contains("Studded Leather"))
                         {
-                            currentMonster.armorType = ArmorTypeID.StuddedLeather;
+                            currentMonster.armorTypeID = ArmorTypeID.StuddedLeather;
+                        }
+                        else if (armorTypeText.Contains("Leather"))
+                        {
+                            currentMonster.armorTypeID = ArmorTypeID.Leather;
                         }
                         else if (armorTypeText.Contains("Hide"))
                         {
-                            currentMonster.armorType = ArmorTypeID.Hide;
+                            currentMonster.armorTypeID = ArmorTypeID.Hide;
                         }
                         else if (armorTypeText.Contains("Chain Shirt"))
                         {
-                            currentMonster.armorType = ArmorTypeID.ChainShirt;
+                            currentMonster.armorTypeID = ArmorTypeID.ChainShirt;
                         }
                         else if (armorTypeText.Contains("Chain Mail"))
                         {
-                            currentMonster.armorType = ArmorTypeID.ChainMail;
+                            currentMonster.armorTypeID = ArmorTypeID.ChainMail;
                         }
                         else if (armorTypeText.Contains("Scale Mail"))
                         {
-                            currentMonster.armorType = ArmorTypeID.ScaleMail;
+                            currentMonster.armorTypeID = ArmorTypeID.ScaleMail;
                         }
                         else if (armorTypeText.Contains("Plate"))
                         {
-                            currentMonster.armorType = ArmorTypeID.Plate;
+                            currentMonster.armorTypeID = ArmorTypeID.Plate;
                         }
                         else
                         {
-                            currentMonster.armorType = ArmorTypeID.Other;
+                            currentMonster.armorTypeID = ArmorTypeID.Other;
                         }
                     }
                     else
                     {
-                        currentMonster.armorType = ArmorTypeID.Unspecified;
+                        currentMonster.armorTypeID = ArmorTypeID.Unspecified;
                     }
                 }
+            }
+
+            for (int i = 0; i < armorLines.Length; i++)
+            {
+                currentArmor = new ArmorType();
+                string[] splitComma = armorLines[i].Split(",");
+                ArmorTypeID armorTypeID = Enum.Parse<ArmorTypeID>(splitComma[0]);
+                currentArmor.DisplayName = splitComma[1];
+                currentArmor.Category = Enum.Parse<WeightCategory>(splitComma[2]);
+                currentArmor.Weight = Convert.ToInt32(splitComma[3]);
+                armorTypes.Add(armorTypeID, currentArmor);
             }
 
             Console.WriteLine("MONSTER MANUAL");
@@ -179,32 +230,15 @@ namespace Monster_Manual_Unit_1
                 }
                 else if (foundMonster && monsterTypeResults.Count == 1 && searchInput == "n")
                 {
-                    string monsterName = monsterTypeResults[0].name;
-                    MonsterType monster = monsters[monsterName];
-
-
                     Console.WriteLine("Here's the monster you wanted to see.");
-                    Console.WriteLine();
-                    Console.WriteLine($"Name: {monsterName}");
-                    Console.WriteLine($"Description: {monsterTypeResults[0].description}");
-                    Console.WriteLine($"Alignment: {monsterTypeResults[0].alignment}");
-                    Console.WriteLine($"Hit Points Roll: {monsterTypeResults[0].hitPointsRoll}");
-                    Console.WriteLine($"Armor Class: {monsterTypeResults[0].armorClass}");
-                    Console.WriteLine($"Armor Type: {monsterTypeResults[0].armorType}");
+                    Display(monsterTypeResults[0]);
                 }
                 else if (foundMonster && monsterTypeResults.Count != 1 && searchInput == "n")
                 {
                     Console.WriteLine("We found some monsters for you. Which one would you like to look at?");
                     string userInputNumber = Console.ReadLine();
                     int result = Convert.ToInt32(userInputNumber);
-                    Console.WriteLine();
-                    Console.WriteLine($"Name: {monsterTypeResults[result - 1].name}");
-                    Console.WriteLine($"Description: {monsterTypeResults[result - 1].description}");
-                    Console.WriteLine($"Alignment: {monsterTypeResults[result - 1].alignment}");
-                    Console.WriteLine($"Hit Points Roll: {monsterTypeResults[result - 1].hitPointsRoll}");
-                    Console.WriteLine($"Armor Class: {monsterTypeResults[result - 1].armorClass}");
-                    Console.WriteLine($"Armor Type: {monsterTypeResults[result - 1].armorType}");
-
+                    Display(monsterTypeResults[result - 1]);
                     break;
                 }
             }
@@ -235,7 +269,7 @@ namespace Monster_Manual_Unit_1
 
                     ArmorTypeID armorResult = (ArmorTypeID)result;
 
-                    if (monster.armorType == armorResult)
+                    if (monster.armorTypeID == armorResult)
                     {
                         Console.WriteLine($"{numberCounter}. {monster.name}");
                         foundMonster = true;
@@ -251,14 +285,9 @@ namespace Monster_Manual_Unit_1
                     Console.WriteLine();
                     string userInputNumber = Console.ReadLine();
                     int inputResult = Convert.ToInt32(userInputNumber);
-                    Console.WriteLine();
-                    Console.WriteLine($"Name: {monsterTypeResults[inputResult - 1].name}");
-                    Console.WriteLine($"Description: {monsterTypeResults[inputResult - 1].description}");
-                    Console.WriteLine($"Alignment: {monsterTypeResults[inputResult - 1].alignment}");
-                    Console.WriteLine($"Hit Points Roll: {monsterTypeResults[inputResult - 1].hitPointsRoll}");
-                    Console.WriteLine($"Armor Class: {monsterTypeResults[inputResult - 1].armorClass}");
-                    Console.WriteLine($"Armor Type: {monsterTypeResults[inputResult - 1].armorType}");
-                    Console.WriteLine();
+                    currentMonster = monsterTypeResults[inputResult - 1];
+
+                    Display(currentMonster);
                     break;
                 }
             }
